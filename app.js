@@ -80,13 +80,18 @@ const markup = galleryItems
 
 galleryListRef.innerHTML = markup;
 
+
+  
 const onOpenModalClick = e => {
   e.preventDefault();
 
-  if (e.target.localName === 'img') {
-    modalImgRef.src = e.target.dataset.source;
-    modalImgRef.alt = e.target.alt;
-    modalImgRef.dataset.index = e.target.dataset.index;
+  updateAttr(e.target.dataset.source, e.target.alt, a.target.dataset.index)
+
+  
+  function updateAttr(src = "", alt = "", index = 0) {
+    modalImgRef.src = src;
+    modalImgRef.alt = alt;
+    modalImgRef.dataset.index = index;
 
     modalRef.classList.add('is-open');
   }
@@ -102,8 +107,7 @@ const onCloseModalClick = e => {
   if (e.target.localName !== 'img') {
     modalRef.classList.remove('is-open');
 
-    modalImgRef.src = '';
-    modalImgRef.alt = '';
+    updateAttr();
   }
 };
 
@@ -130,7 +134,7 @@ function onArrowLeft() {
 }
 function onArrowRight() {
   let index = +modalImgRef.dataset.index;
-  if (index === gallery.length - 1) {
+  if (index === gallery.length + 1) {
     newSrc(0);
     return;
   }
